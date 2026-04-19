@@ -1,0 +1,18 @@
+[package]
+name = "oxide-lb"
+version = "0.1.0"
+edition = "2024"
+authors = ["EugSh1"]
+license = "MIT"
+repository = "https://github.com/EugSh1/oxide-lb"
+
+[dependencies]
+anyhow = "1.0.102"
+tokio = { version = "1.51.1", features = ["macros", "net", "rt-multi-thread", "io-util", "time", "signal"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["json", "env-filter"] }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1

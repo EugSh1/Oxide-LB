@@ -1,0 +1,45 @@
+# compose.yml for demo purposes
+services:
+    oxide-lb:
+        build: .
+        ports:
+            - "3000:3000"
+        environment:
+            - OXIDE_LB_BIND_ADDR=0.0.0.0:3000
+            - OXIDE_LB_BACKEND_ADDRESSES=172.20.0.10:80,172.20.0.11:80,172.20.0.12:80
+            - OXIDE_LB_SELECTION_STRATEGY=ROUND_ROBIN
+            - OXIDE_LB_HEALTH_CHECK_INTERVAL=5
+            - RUST_LOG=info
+        networks:
+            oxide-net:
+                ipv4_address: 172.20.0.2
+        depends_on:
+            - app-1
+            - app-2
+            - app-3
+
+    # Test backends
+    app-1:
+        image: traefik/whoami
+        networks:
+            oxide-net:
+                ipv4_address: 172.20.0.10
+
+    app-2:
+        image: traefik/whoami
+        networks:
+            oxide-net:
+                ipv4_address: 172.20.0.11
+
+    app-3:
+        image: traefik/whoami
+        networks:
+            oxide-net:
+                ipv4_address: 172.20.0.12
+
+networks:
+    oxide-net:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.20.0.0/24

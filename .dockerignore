@@ -1,0 +1,13 @@
+target
+
+.git
+.gitignore
+.dockerignore
+
+.github
+
+.DS_Store
+
+readme.md
+LICENSE
+Makefile
