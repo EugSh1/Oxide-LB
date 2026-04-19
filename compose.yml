@@ -1,7 +1,7 @@
 # compose.yml for demo purposes
 services:
     oxide-lb:
-        build: .
+        image: ghcr.io/eugsh1/oxide-lb
         ports:
             - "3000:3000"
         environment:

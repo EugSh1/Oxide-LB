@@ -2,7 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Rust](https://img.shields.io/badge/Rust-1.94-orange.svg)](https://www.rust-lang.org)
-[![CI/CD](https://github.com/EugSh1/oxide-lb/actions/workflows/ci.yml/badge.svg)](https://github.com/EugSh1/oxide-lb/actions/workflows/ci.yml)
+[![CI](https://github.com/EugSh1/oxide-lb/actions/workflows/ci.yml/badge.svg)](https://github.com/EugSh1/oxide-lb/actions/workflows/ci.yml)
+[![Build & Publish](https://github.com/EugSh1/oxide-lb/actions/workflows/build.yml/badge.svg)](https://github.com/EugSh1/oxide-lb/actions/workflows/build.yml)
 
 A **fast, lightweight, and safe L4 (TCP) load balancer** built with Rust and Tokio. Oxide-LB is
 designed to be a highly concurrent, low-overhead reverse proxy that efficiently distributes TCP
