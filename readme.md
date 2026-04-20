@@ -154,6 +154,57 @@ docker run -d \
 5. **Cleanup**: When the socket closes, the `ConnectionGuard` automatically drops, decrementing the
    active connection counter.
 
+## Benchmarks
+
+<!-- prettier-ignore -->
+> [!NOTE]
+> These are synthetic localhost benchmarks designed to measure the raw overhead of the
+> load balancer.
+
+**Hardware:** Apple MacBook Air M3 (24GB RAM)
+
+**Setup:** `wrk` benchmarking tool, Oxide-LB, 2x Go HTTP Backends (all running on `localhost`).
+
+<details>
+<summary><b>View wrk output (Round Robin) - ~110k RPS</b></summary>
+<pre>
+wrk -t4 -c200 -d15s --latency http://127.0.0.1:3000/
+Running 15s test @ http://127.0.0.1:3000/
+  4 threads and 200 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.65ms    1.27ms  26.18ms   89.84%
+    Req/Sec    27.77k     6.82k   48.43k    66.83%
+  Latency Distribution
+     50%    1.35ms
+     75%    1.91ms
+     90%    2.80ms
+     99%    7.04ms
+  1663837 requests in 15.08s, 212.63MB read
+Requests/sec: 110311.61
+Transfer/sec:     14.10MB
+</pre>
+</details>
+
+<details>
+<summary><b>View wrk output (Least Connections) - ~111k RPS</b></summary>
+<pre>
+wrk -t4 -c200 -d15s --latency http://127.0.0.1:3000/
+Running 15s test @ http://127.0.0.1:3000/
+  4 threads and 200 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.64ms    1.26ms  27.99ms   91.43%
+    Req/Sec    28.00k     7.04k   53.82k    65.33%
+  Latency Distribution
+     50%    1.37ms
+     75%    1.88ms
+     90%    2.64ms
+     99%    6.67ms
+  1677930 requests in 15.10s, 214.43MB read
+Requests/sec: 111148.48
+Transfer/sec:     14.20MB
+</pre>
+</details>
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
