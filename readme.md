@@ -160,6 +160,8 @@ docker run -d \
 > [!NOTE]
 > These are synthetic localhost benchmarks designed to measure the raw overhead of the
 > load balancer.
+>
+> All components (wrk, Oxide-LB, and Go backends) were executed as native binaries directly on macOS. This eliminates Docker Desktop's overhead and virtio-networking latency.
 
 **Hardware:** Apple MacBook Air M3 (24GB RAM)
 
