@@ -165,9 +165,9 @@ docker run -d \
 
 **Setup:** `wrk` benchmarking tool, Oxide-LB, 2x Go HTTP Backends (all running on `localhost`).
 
-<details>
-<summary><b>View wrk output (Round Robin) - ~110k RPS</b></summary>
-<pre>
+### wrk output (Round Robin) - ~110k RPS
+
+```
 wrk -t4 -c200 -d15s --latency http://127.0.0.1:3000/
 Running 15s test @ http://127.0.0.1:3000/
   4 threads and 200 connections
@@ -182,12 +182,11 @@ Running 15s test @ http://127.0.0.1:3000/
   1663837 requests in 15.08s, 212.63MB read
 Requests/sec: 110311.61
 Transfer/sec:     14.10MB
-</pre>
-</details>
+```
 
-<details>
-<summary><b>View wrk output (Least Connections) - ~111k RPS</b></summary>
-<pre>
+### wrk output (Least Connections) - ~111k RPS
+
+```
 wrk -t4 -c200 -d15s --latency http://127.0.0.1:3000/
 Running 15s test @ http://127.0.0.1:3000/
   4 threads and 200 connections
@@ -202,8 +201,7 @@ Running 15s test @ http://127.0.0.1:3000/
   1677930 requests in 15.10s, 214.43MB read
 Requests/sec: 111148.48
 Transfer/sec:     14.20MB
-</pre>
-</details>
+```
 
 ## License
 
