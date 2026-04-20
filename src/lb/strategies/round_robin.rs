@@ -1,4 +1,4 @@
-use crate::lb::{backend::Backend, strategy::SelectionStrategy};
+use crate::lb::backend::Backend;
 use anyhow::{Result, bail};
 use std::sync::atomic::{AtomicUsize, Ordering};
 
@@ -12,10 +12,8 @@ impl RoundRobin {
             current_backend_index: AtomicUsize::new(0),
         }
     }
-}
 
-impl SelectionStrategy for RoundRobin {
-    fn select<'a>(&self, backends: &'a [Backend]) -> Result<&'a Backend> {
+    pub fn select<'a>(&self, backends: &'a [Backend]) -> Result<&'a Backend> {
         let backends_count = backends.len();
 
         if backends_count == 0 {

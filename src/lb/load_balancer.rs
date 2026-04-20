@@ -27,7 +27,12 @@ impl LoadBalancer {
     }
 
     pub async fn run(self) -> Result<()> {
-        tracing::info!("Oxide-LB started");
+        tracing::info!(
+            strategy = self.inner.config.strategy.name(),
+            bind_addr = %self.inner.config.bind_addr,
+            backends_count = self.inner.config.backend_addresses.len(),
+            "Oxide-LB started"
+        );
 
         #[cfg(unix)]
         let mut sigterm = tokio::signal::unix::signal(SignalKind::terminate())

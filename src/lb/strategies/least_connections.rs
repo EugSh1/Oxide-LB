@@ -1,4 +1,4 @@
-use crate::lb::{backend::Backend, strategy::SelectionStrategy};
+use crate::lb::backend::Backend;
 use anyhow::{Result, anyhow};
 use std::sync::atomic::Ordering;
 
@@ -8,10 +8,8 @@ impl LeastConnections {
     pub fn new() -> Self {
         Self
     }
-}
 
-impl SelectionStrategy for LeastConnections {
-    fn select<'a>(&self, backends: &'a [Backend]) -> Result<&'a Backend> {
+    pub fn select<'a>(&self, backends: &'a [Backend]) -> Result<&'a Backend> {
         backends
             .iter()
             .filter(|backend| backend.is_alive.load(Ordering::Relaxed))

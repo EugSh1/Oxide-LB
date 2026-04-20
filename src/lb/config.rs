@@ -23,7 +23,7 @@ pub struct Config {
     pub bind_addr: SocketAddr,
     pub backend_addresses: Vec<Backend>,
     pub health_check_interval: Duration,
-    pub strategy: Box<dyn SelectionStrategy>,
+    pub strategy: SelectionStrategy,
 }
 
 impl Config {
@@ -54,9 +54,11 @@ impl Config {
 
         let selection_strategy_str = Self::get_env_var(SELECTION_STRATEGY_ENV_VAR_NAME)?;
 
-        let strategy: Box<dyn SelectionStrategy> = match selection_strategy_str.as_str() {
-            ROUND_ROBIN_STRATEGY_NAME => Box::new(RoundRobin::new()),
-            LEAST_CONNECTIONS_STRATEGY_NAME => Box::new(LeastConnections::new()),
+        let strategy = match selection_strategy_str.as_str() {
+            ROUND_ROBIN_STRATEGY_NAME => SelectionStrategy::RoundRobin(RoundRobin::new()),
+            LEAST_CONNECTIONS_STRATEGY_NAME => {
+                SelectionStrategy::LeastConnections(LeastConnections::new())
+            }
             _ => {
                 bail!(
                     "Unknown selection strategy. Available options: {ROUND_ROBIN_STRATEGY_NAME}, {LEAST_CONNECTIONS_STRATEGY_NAME}."
